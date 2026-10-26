@@ -252,12 +252,30 @@ ipconfig
 3. Rebuild and redeploy the application to HoloLens 2.
 
 **Note:** The video IP is configured independently of the ROS–TCP connection (B3). Both settings must be updated when changing PC.
-### B5. Check connectivity — after IP changes
+### B5. Check HoloLens–ROS Connectivity — New PC
 
-1. Start the ROS pipeline (**A7**) and the MJPEG server (**C2**).
-2. Check that HoloLens can reach the **PC's TCP port 10000** and **HTTP port 5000**.
-3. If ROS runs in **WSL 2**, configure Windows↔WSL networking/port forwarding as needed. Allow the required inbound ports in the firewall. See [WSL networking](https://learn.microsoft.com/windows/wsl/networking).
-4. In Unity Editor, press **Play** and check tracking and video **separately**.
+1. Start the ROS 2 pipeline (Part A7).
+2. Make sure HoloLens 2 and the Windows PC are connected to the same network.
+3. If ROS is running in WSL 2 using NAT networking, open **PowerShell as Administrator** and find the WSL IP:
+
+   ```powershell
+   wsl hostname -I
+   ```
+
+4. If port forwarding is not already configured, run the following command, replacing `<WSL_IP>` with the detected address:
+
+   ```powershell
+   netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=10000 connectaddress=<WSL_IP> connectport=10000
+   ```
+
+5. Allow inbound TCP port `10000` in Windows Firewall on the trusted local network, if necessary.
+6. Launch the HoloLens application and verify that ROS tracking data are received correctly.
+
+**Important:**
+- Unity must use the **Windows PC IP address**, not the WSL IP.
+- If the WSL IP changes, update the existing port-forwarding rule.
+- Port forwarding is generally not required with WSL mirrored networking; check the firewall configuration instead.
+- The endoscopic video uses a separate connection on port `5000` (Part C).
 
 ### B6. Build and deploy to HoloLens 2 — after changes
 
