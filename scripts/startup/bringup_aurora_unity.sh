@@ -8,7 +8,7 @@
 # T2) Python pose publisher
 #     - subscribes to /aurora/sensor0 and /aurora/sensor1
 #     - applies sensor0 tip offset -> /aurora_pose_1
-#     - uses valid sensor1, otherwise sensor0 -> /aurora_pose_2
+#     - uses valid sensor1 only -> /aurora_pose_2 (no fallback)
 # T3) ROS-TCP Endpoint for Unity / HoloLens 2
 #
 # The Aurora ROM path is resolved automatically.
