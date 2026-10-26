@@ -18,7 +18,11 @@ def generate_launch_description():
     # =============================================================================
     # LAUNCH ARGUMENTS
     # =============================================================================
-    
+    serial_port_arg = DeclareLaunchArgument(
+        'serial_port',
+        default_value='/dev/ttyUSB0',
+        description='Aurora serial port'
+    )
     config_file_arg = DeclareLaunchArgument(
         'config_file',
         default_value=PathJoinSubstitution([
@@ -72,7 +76,9 @@ def generate_launch_description():
         executable='aurora_publisher_node',
         name='aurora_publisher_node',
         namespace=LaunchConfiguration('namespace'),
-        parameters=[LaunchConfiguration('config_file')],
+        parameters=[
+        LaunchConfiguration('config_file'),
+        {'serial_port': LaunchConfiguration('serial_port')}],
         arguments=[
             '--ros-args', 
             '--log-level', LaunchConfiguration('log_level')
@@ -140,6 +146,7 @@ def generate_launch_description():
     return LaunchDescription([
         # Arguments
         config_file_arg,
+        serial_port_arg,
         debug_arg,
         log_level_arg,
         use_rviz_arg,
