@@ -179,8 +179,7 @@ tail -n 40 ~/.ros/aurora_unity_logs/T3_unity_endpoint.log
 
 5. **Leave the first terminal open** during the session. Use `Ctrl+C` to stop.
 
-> **Tracking validity:** `/aurora_pose_2` can fall back to sensor 0 if sensor 1 is invalid. Check **sensor 1 itself** before interpreting the displayed pose as valid endoscope tracking.
-
+**Tracking validity:** `/aurora_pose_2` is published exclusively from sensor 1 (endoscope). If sensor 1 data is invalid, no new endoscope pose is published. No fallback to sensor 0 is used.
 ---
 
 ## Part B — Unity & HoloLens 2
