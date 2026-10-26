@@ -4,9 +4,8 @@ Step-by-step instructions to **install, configure and run** the system on a new 
 
 **Code:** [MR-Colonoscopy-Simulation — `ros2-package` branch](https://github.com/BeatriceBertolozzi00/MR-Colonoscopy-Simulation/tree/ros2-package)  
 **Unity project:** `Tesi_simulazione_colonoscopy_Unity.zip` (shared separately with wetransfer).  
-**Video server:** separate component; obtain its script and startup command from the project maintainer.
+**Video server:** `scripts/video/server_endoscope.py` — Run on Windows using `py server_endoscope.py` (see Part C for setup and instructions).
 
-![Tracking and endoscopic video connections](docs/images/ros-video-overview.png)
 
 > **Two independent connections:** tracking uses **ROS–TCP / port 10000**; endoscopic video uses **HTTP MJPEG / port 5000**. Both must be configured when the PC IP changes.
 
@@ -212,7 +211,7 @@ ipconfig
 
 ### B3. Set Unity ROS settings — new PC / IP change
 
-![Illustrative guide to Unity ROS and video settings](docs/images/unity-network-settings.png)
+
 
 1. In Unity, open **Robotics → ROS Settings** from the top menu.
 2. Set **ROS IP Address** = `<PC_IP>` (the PC running ROS 2).
@@ -295,7 +294,7 @@ ipconfig
 
 ### C3. Configure the Video Server — New PC
 
-1. Open `endoscope.py`.
+1. Open `server_endoscope.py`, located in the ROS 2 repository at `scripts/video/server_endoscope.py`.
 2. Verify the camera index:
 
    ```python
