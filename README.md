@@ -38,7 +38,7 @@ Step-by-step instructions to **install, configure and run** the system on a new 
 
 ```bash
 sudo apt update
-sudo apt install -y git python3-pip python3-colcon-common-extensions python3-rosdep
+sudo apt install -y git python3-pip python3-numpy python3-colcon-common-extensions python3-rosdep
 ```
 
 3. Initialize `rosdep` **only if not already initialized**, then update:
