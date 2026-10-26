@@ -26,7 +26,52 @@ Step-by-step instructions to **install, configure and run** the system on a new 
 - MJPEG video server and capture-device drivers (Part C).
 
 ---
+## Package Structure
 
+```text
+MR-Colonoscopy-Simulation/
+│
+├── config/
+│   └── aurora_config.yaml                 # Aurora settings and ROM configuration
+│
+├── launch/
+│   └── aurora_pub.launch.py               # ROS 2 Aurora driver launch
+│
+├── scripts/
+│   ├── startup/
+│   │   └── bringup_aurora_unity.sh        # Starts the complete ROS 2 pipeline
+│   │
+│   ├── tracking/
+│   │   └── aurora_sensor0_tip_and_sensor1_publisher.py
+│   │                                      # Pen and endoscope pose publisher
+│   │
+│   └── video/
+│       └── server_endoscope.py            # Windows MJPEG video server
+│
+├── src/
+│   ├── aurora_publisher_node.cpp          # ROS 2 tracking node
+│   ├── ndi_aurora_ros2.cpp                # NDI Aurora communication
+│   └── aurora_utils.cpp                   # Tracking utilities
+│
+├── include/
+│   └── aurora_ndi_ros2_driver/            # C++ header files
+│
+├── msg/
+│   ├── AuroraData.msg                     # Aurora sensor measurements
+│   └── AuroraDataVector.msg               # Multiple sensor measurements
+│
+├── rom/
+│   └── 610029_AuroraMini6DOF_1.8x9mm/
+│       └── 610029-6DOF.rom                # Endoscope sensor ROM
+│
+├── docs/                                  # Additional documentation
+│
+├── CMakeLists.txt                         # ROS 2 build configuration
+├── package.xml                            # ROS 2 package dependencies
+└── README.md                              # Setup and operating guide
+```
+
+**Note:** The Unity project (`Tesi_simulazione_colonoscopy_Unity.zip`) is distributed separately. The ROS–TCP Endpoint is also cloned separately during installation (Part A2).
 ## Part A — ROS 2 & Aurora Tracking
 
 **Run A1–A5 once on each new PC. Run A6–A7 for each session.**
