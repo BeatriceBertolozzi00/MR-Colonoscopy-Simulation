@@ -10,7 +10,7 @@ aurora_publisher_node:
     num_sensors: 2
 
     # ROM file for the endoscope sensor (0B)
-        tool_rom_files:
+    tool_rom_files:
       - "__AURORA_ROM_PATH__"
 
     # Port 0A: Aurora calibration probe
