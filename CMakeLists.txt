@@ -17,6 +17,7 @@ find_package(tf2_geometry_msgs REQUIRED)
 # Generate custom message interfaces
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/AuroraData.msg"
+  "msg/AuroraDataVector.msg"
   DEPENDENCIES geometry_msgs std_msgs
 )
 

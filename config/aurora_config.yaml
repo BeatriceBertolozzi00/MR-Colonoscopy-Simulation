@@ -1,125 +1,52 @@
 aurora_publisher_node:
   ros__parameters:
-    # Serial
+
+    # Serial connection
     serial_port: "/dev/ttyUSB0"
     baud_rate: 230400
     serial_timeout_sec: 2.0
-    
-    # =========================================================================
-    # Aurora - Multi-sensor configuration
-    # =========================================================================
-    
-    # TOTAL number of sensors (including both regular and autoconfigured)
-    num_sensors: 1  # Total: 1 regular sensor (with ROM file)
-    
-    # ROM files for sensors that need explicit ROM definition
-    # For autoconfigured sensors (like NDI pens), do NOT include ROM file  
-    # The length of this array should be: num_sensors - num_autoconfig_sensors
-    tool_rom_files: 
-      - "/workspace/src/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"  # Sensor 0A
-    
-    # Port handles for ALL sensors (in hexadecimal: 0A, 0B, 0C, 0D, etc.)
-    # Must have num_sensors entries
-    port_handles: 
-      - "0A"  # Port 1 - Regular sensor with ROM file
-    
-    # =========================================================================
-    # AUTOCONFIGURED PORTS (for NDI Pens with internal ROM)
-    # =========================================================================
-    # List of ports that will be autoconfigured by the Aurora system
-    # These sensors have internal ROM and don't need external ROM files
-    # Example: NDI passive stylus pens
-    port_handles_autoconfig: 
-      - ""  # Empty - no autoconfigured sensors
-    
-    # =========================================================================
-    # ROS Topics and TF Frames
-    # =========================================================================
-    
-    # Topic names for ALL sensors (must have num_sensors entries)
-    topic_names:
-      - "/aurora_data_sensor0"  # Sensor 0A (regular)
-    
-    # Child frame names for TF for ALL sensors (must have num_sensors entries)
-    child_frame_names:
-      - "endo_aurora_sensor0"   # Sensor 0A (regular)
-    
-    # Common reference frame for all sensors
+
+    # Multi-sensor configuration
+    num_sensors: 2
+
+    # ROM file for the endoscope sensor (0B)
+        tool_rom_files:
+      - "__AURORA_ROM_PATH__"
+
+    # Port 0A: Aurora calibration probe
+    # Port 0B: Endoscope sensor
+    port_handles: ["0A", "0B"]
+    port_handles_autoconfig: ["0A"]
+
+    # ROS 2 topics and reference frames
+    topic_names: ["aurora/sensor0", "aurora/sensor1"]
+    child_frame_names: ["endo_aurora_sensor0", "endo_aurora_sensor1"]
+
     frame_id: "aurora_base"
-    
-    # Reference port for tracking
     reference_port: "10"
-    
-    # =========================================================================
-    # Tracking and Measurement Options
-    # =========================================================================
+
+    # Tracking settings
     track_reply_option: 80
     measure_reply_option: "0001"
     status_reply: true
-    
-    # =========================================================================
-    # ROS Publishing
-    # =========================================================================
+
+    # ROS 2 publishing
     publish_rate_hz: 40.0
     queue_size: 10
-    
-    # =========================================================================
-    # Data Processing
-    # =========================================================================
+
+    # Data filtering
     enable_data_filtering: true
     filter_window_size: 4
+
     position_scale_factor: 1.0
     orientation_scale_factor: 1.0
     error_scale_factor: 1.0
-    
-    # =========================================================================
-    # Connection and Timeouts
-    # =========================================================================
+
+    # Connection settings
     command_timeout_sec: 2.0
     max_connection_retries: 3
     retry_delay_sec: 2.0
-    
-    # =========================================================================
-    # Logging
-    # =========================================================================
+
+    # Debug
     debug_mode: false
     log_raw_data: false
-
-# =========================================================================
-# CONFIGURATION EXAMPLES
-# =========================================================================
-
-# Example 1: Single regular sensor (with ROM file) - CURRENT CONFIGURATION
-# num_sensors: 1
-# tool_rom_files: ["/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"]
-# port_handles: ["0A"]
-# port_handles_autoconfig: [""]  # Empty - no autoconfigured sensors
-
-# Example 2: Single pen (all autoconfigured)
-# num_sensors: 1
-# tool_rom_files: [""]  # Empty - no ROM files needed
-# port_handles: ["0A"]
-# port_handles_autoconfig: ["0A"]  # Pen is autoconfigured
-
-# Example 3: Two regular sensors (no pens)
-# num_sensors: 2
-# tool_rom_files: 
-#   - "/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"
-#   - "/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"
-# port_handles: ["0A", "0B"]
-# port_handles_autoconfig: [""]  # Empty - no autoconfigured sensors
-
-# Example 4: Mixed (1 regular sensor + 1 pen)
-# num_sensors: 2
-# tool_rom_files: 
-#   - "/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"  # Only for 0A
-# port_handles: ["0A", "0B"]
-# port_handles_autoconfig: ["0B"]  # Only 0B is autoconfigured
-
-# Example 5: Multiple regular + multiple pens
-# num_sensors: 4
-# tool_rom_files: 
-#   - "/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"  # For 0A
-#   - "/aurora_ndi_ros2_driver/rom/610029_AuroraMini6DOF_1.8x9mm/610029-6DOF.rom"  # For 0B
-# port_handles: ["0A", "0B", "0C", "0D"]
-# port_handles_autoconfig: ["0C", "0D"]  # Ports 0C and 0D are pens
